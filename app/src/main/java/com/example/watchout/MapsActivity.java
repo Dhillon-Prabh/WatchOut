@@ -18,8 +18,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.geojson.GeoJsonLayer;
+import com.google.maps.android.geojson.GeoJsonPointStyle;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -57,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.getUiSettings().setRotateGesturesEnabled(false);
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
         googleMap.getUiSettings().setTiltGesturesEnabled(false);
 
         addSchoolsLayer();
@@ -89,8 +97,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void addSchoolsLayer() {
-        GeoJsonLayer layer = new GeoJsonLayer(getMap(), R.raw.geoJsonFile,
-                getApplicationContext());
+        GeoJsonLayer layer = null;
+        try {
+            layer = new GeoJsonLayer(mMap, R.raw.schools,
+                    getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        layer.addLayerToMap();
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_school_marker);
+        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
+        pointStyle.setIcon(icon);
     }
 
     private void addMarker2Map(Location location) {
@@ -102,8 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.addMarker(new MarkerOptions().position(latlng).title(msg));
 
-        float zoomLevel = 20.0f;
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,zoomLevel));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latlng));
 
     }
 
