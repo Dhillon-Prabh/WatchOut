@@ -109,9 +109,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
         layer.addLayerToMap();
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.school);
-        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
-        pointStyle.setIcon(icon);
+//        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.school);
+////        GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
+////        pointStyle.setIcon(icon);
     }
 
     private void addMarker2Map(Location location) {
