@@ -7,4 +7,8 @@
     <string name="distance">Distance</string>
     <string name="min_distance">500m</string>
     <string name="max_distance">2km</string>
+    <string name="alert_option">Alert</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="sound">Sound</string>
+    <string name="tts">Text To Speech</string>
 </resources>
