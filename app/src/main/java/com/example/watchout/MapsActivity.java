@@ -90,7 +90,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            addMarker2Map(lastKnownLocation);
+            if (lastKnownLocation != null) {
+                addMarker2Map(lastKnownLocation);
+            }
         } else {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
@@ -107,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
         layer.addLayerToMap();
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_school_marker);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.school);
         GeoJsonPointStyle pointStyle = layer.getDefaultPointStyle();
         pointStyle.setIcon(icon);
     }
