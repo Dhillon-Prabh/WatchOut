@@ -35,5 +35,9 @@ public class MainActivity extends AppCompatActivity {
             t.setText(String.valueOf(distance));
             t2.setText(alert_option);
         }
+      
+    public void viewMap(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 }

@@ -11,4 +11,5 @@
     <string name="vibrate">Vibrate</string>
     <string name="sound">Sound</string>
     <string name="tts">Text To Speech</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
