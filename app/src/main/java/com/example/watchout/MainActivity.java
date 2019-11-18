@@ -1,5 +1,6 @@
 package com.example.watchout;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 
     public void clickSettings(View view) {
@@ -28,13 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SETTINGS_REQUEST && resultCode == RESULT_OK && data != null) {
-            TextView t = findViewById(R.id.test);
-            TextView t2 = findViewById(R.id.test2);
             distance = data.getIntExtra("distance", 0);
             alert_option = data.getStringExtra("alert");
-            t.setText(String.valueOf(distance));
-            t2.setText(alert_option);
         }
+    }
       
     public void viewMap(View view) {
         Intent intent = new Intent(this, MapsActivity.class);

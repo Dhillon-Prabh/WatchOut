@@ -13,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -27,6 +28,9 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         Intent i = getIntent();
         distance = i.getIntExtra("curDistance", 0);
@@ -107,24 +111,18 @@ public class SettingsActivity extends AppCompatActivity {
                 if (checked) {
                     rb = findViewById(R.id.vibrate_option);
                     alert_option = rb.getText().toString();
-                    Toast.makeText(SettingsActivity.this,
-                            alert_option, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.sound_option:
                 if (checked) {
                     rb = findViewById(R.id.sound_option);
                     alert_option = rb.getText().toString();
-                    Toast.makeText(SettingsActivity.this,
-                            alert_option, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.tts_option:
                 if (checked) {
                     rb = findViewById(R.id.tts_option);
                     alert_option = rb.getText().toString();
-                    Toast.makeText(SettingsActivity.this,
-                            alert_option, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
