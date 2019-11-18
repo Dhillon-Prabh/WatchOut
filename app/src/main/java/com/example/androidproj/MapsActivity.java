@@ -63,13 +63,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        //requests permission
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
 
+                        //how to handle location requests
                         buildLocationRequest();
+                        //builds markers upon receiving location requests
                         buildLocationCallBack();
                         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
 
@@ -77,7 +80,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .findFragmentById(R.id.map);
                         mapFragment.getMapAsync(MapsActivity.this);
 
+                        //Setting the school zone areas
                         initArea();
+                        //Handles location data
                         settingGeoFire();
                     }
 
@@ -106,6 +111,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         geoFire = new GeoFire(myLocationRef);
     }
 
+
     private void buildLocationCallBack() {
         locationCallback = new LocationCallback(){
             @Override
@@ -116,7 +122,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             locationResult.getLastLocation().getLongitude()), new GeoFire.CompletionListener() {
                         @Override
                         public void onComplete(String key, DatabaseError error) {
+                            //remove existing marker
                             if(currentUser != null) currentUser.remove();
+                            //add marker to current location
                             currentUser = mMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(locationResult.getLastLocation().getLatitude(),
                                             locationResult.getLastLocation().getLongitude()))
@@ -135,8 +143,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void buildLocationRequest() {
         locationRequest = new LocationRequest();
+        //Accuracy level - most accurate level possible
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        //Checks every 5 seconds
         locationRequest.setInterval(5000);
+        //Could be faster than set interval
         locationRequest.setFastestInterval(3000);
         locationRequest.setSmallestDisplacement(10f);
     }
