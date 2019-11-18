@@ -74,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         buildLocationRequest();
                         //builds markers upon receiving location requests
                         buildLocationCallBack();
+                        //
                         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
 
                         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -138,7 +139,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         };
-
     }
 
     private void buildLocationRequest() {
@@ -169,11 +169,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
         if(fusedLocationProviderClient != null){
+            //Checks if app allows precise location checking
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                     return;
                 }
             }
+            //Gets periodic update on location
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
         }
 
@@ -187,13 +189,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .strokeWidth(5.0f)
             );
 
-            //Queries when user in school zones
+            //Queries when user in school zones - and triggers notification
             GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), 0.5); //500m
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
                 private void sendNotification(String title, String content){
                     String NOTIFICATION_CHANNEL_ID = "edmt_multiple_location";
                     NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
+                    //checks compatibility of build version
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
                         NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notification",
                                 NotificationManager.IMPORTANCE_DEFAULT);
@@ -217,16 +220,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     notificationManager.notify(new Random().nextInt(), notification);
                 }
 
+                //when user enters radius
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
                     sendNotification("EDMTDEV", String.format("%s entered a school zone", key));
                 }
 
+                //when user location updates and still in radius
                 @Override
                 public void onKeyExited(String key) {
                     sendNotification("EDMTDEV", String.format("%s left the school zone", key));
                 }
 
+                //when user leaves radius
                 @Override
                 public void onKeyMoved(String key, GeoLocation location) {
                     sendNotification("EDMTDEV", String.format("Please drive safely in school zone", key));
