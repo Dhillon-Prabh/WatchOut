@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:background="#B5D99C"
+            android:onClick="viewMap"
             android:textColor="#0F0326"
             android:text="@string/btn_start" />
     </LinearLayout>
