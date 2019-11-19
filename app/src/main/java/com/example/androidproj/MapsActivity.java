@@ -121,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        layer.addLayerToMap();
+//        layer.addLayerToMap();
 
         for (GeoJsonFeature feature : layer.getFeatures()){
             GeoJsonPoint gp = ((GeoJsonPoint) feature.getGeometry());
@@ -209,7 +209,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Radius for school zones
         for(LatLng latLng : schoolZone){
             mMap.addCircle(new CircleOptions().center(latLng)
-                    .radius(500)
+                    .radius(160)
                     .strokeColor(Color.BLUE)
                     .fillColor(0x220000FF)
                     .strokeWidth(5.0f)
