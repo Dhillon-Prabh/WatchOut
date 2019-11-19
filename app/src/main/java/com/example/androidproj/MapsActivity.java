@@ -29,6 +29,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -36,13 +38,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.maps.android.geojson.GeoJsonFeature;
+import com.google.maps.android.geojson.GeoJsonGeometry;
+import com.google.maps.android.geojson.GeoJsonPoint;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.google.maps.android.geojson.GeoJsonLayer;
+import com.google.maps.android.geojson.GeoJsonPointStyle;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -82,7 +92,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         mapFragment.getMapAsync(MapsActivity.this);
 
                         //Setting the school zone areas
-                        initArea();
                         //Handles location data
                         settingGeoFire();
                     }
@@ -101,15 +110,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void initArea() {
         schoolZone = new ArrayList<>();
-        schoolZone.add(new LatLng(37.422, -122.044));
-        schoolZone.add(new LatLng(37.422, -122.144));
-        schoolZone.add(new LatLng(37.422, -122.244));
+
+        GeoJsonLayer layer = null;
+
+        try {
+            layer = new GeoJsonLayer(mMap, R.raw.schools,
+                    getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        layer.addLayerToMap();
+
+        for (GeoJsonFeature feature : layer.getFeatures()){
+            GeoJsonPoint gp = ((GeoJsonPoint) feature.getGeometry());
+            schoolZone.add(gp.getCoordinates());
+        }
     }
 
     private void settingGeoFire() {
 
-        myLocationRef = FirebaseDatabase.getInstance().getReference("MyLocation");
+        myLocationRef = FirebaseDatabase.getInstance().getReference();
         geoFire = new GeoFire(myLocationRef);
+
     }
 
 
@@ -165,6 +189,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        initArea();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
