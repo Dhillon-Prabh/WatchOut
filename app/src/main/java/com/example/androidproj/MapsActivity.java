@@ -72,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int distance;
     private String alert_option;
     static final int SETTINGS_REQUEST_MAP = 2;
-    TextToSpeech tts;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -341,6 +341,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         settings.putExtra("alert", alert_option);
         setResult(RESULT_OK, settings);
         this.finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mMap != null) {
+            mMap.clear();
+            onMapReady(mMap);
+        }
     }
 
     public void clickSettings(View view) {
