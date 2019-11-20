@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFF8D"
+    android:background="@drawable/background_driving"
     tools:context=".MainActivity">
 
     <ImageButton
@@ -18,16 +18,6 @@
         app:srcCompat="@drawable/settings_icon"
         android:background="@null"
         android:onClick="clickSettings"/>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/app_title"
-        android:textColor="#0F0326"
-        android:textSize="50sp"
-        android:layout_marginBottom="30dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
