@@ -35,19 +35,19 @@ public class SettingsActivity extends AppCompatActivity {
         distance = i.getIntExtra("curDistance", 0);
         alert_option = i.getStringExtra("alert");
         if (distance == 0) {
-            distance = 750;
+            distance = 160;
         }
         distanceSeekbar = findViewById(R.id.distance_seekbar);
         etDistance = findViewById(R.id.distance_selected);
         etDistance.setInputType(InputType.TYPE_CLASS_NUMBER);
         etDistance.setText(String.valueOf(distance));
 
-        distanceSeekbar.setMax(150);
-        distanceSeekbar.setProgress((distance - 500) / 10);
+        distanceSeekbar.setMax(340);
+        distanceSeekbar.setProgress(distance - 160);
         distanceSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                distance = 500 + progress * 10;
+                distance = 160 + progress;
                 etDistance.setText(String.valueOf(distance));
             }
 
@@ -68,9 +68,9 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 }
                 int i = Integer.parseInt(s.toString());
-                if (i >= 500 && i <= 2000) {
+                if (i >= 160 && i <= 500) {
                     distance = i;
-                    distanceSeekbar.setProgress( (i - 500) / 10);
+                    distanceSeekbar.setProgress(i - 160);
                     etDistance.setSelection(etDistance.getText().length());
                 }
             }

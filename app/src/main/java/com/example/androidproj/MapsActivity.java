@@ -213,6 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+
         if(fusedLocationProviderClient != null){
             //Checks if app allows precise location checking
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -228,7 +229,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Radius for school zones
         for(LatLng latLng : schoolZone){
             mMap.addCircle(new CircleOptions().center(latLng)
-                    .radius(160)
+                    .radius(distance)
                     .strokeColor(Color.BLUE)
                     .fillColor(0x220000FF)
                     .strokeWidth(5.0f)

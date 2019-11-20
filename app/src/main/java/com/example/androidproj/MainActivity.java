@@ -4,12 +4,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     static final int SETTINGS_REQUEST = 1;
-    int distance = 500;
+    int distance = 160;
     String alert_option = "sound";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

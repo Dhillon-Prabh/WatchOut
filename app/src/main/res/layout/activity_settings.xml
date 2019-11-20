@@ -5,27 +5,31 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFF8D"
+    android:background="#f2f2f2"
     android:padding="20dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="371dp"
         android:layout_height="wrap_content">
 
-        <Button
+        <ImageButton
             android:id="@+id/back_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/back_icon"
-            android:onClick="clickBack"/>
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:onClick="clickBack"
+            app:srcCompat="@drawable/back_icon" />
 
         <TextView
             android:id="@+id/settings_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="95dp"
             android:text="@string/settings"
-            android:textSize="30sp"/>
+            android:textSize="30sp" />
 
     </LinearLayout>
 
@@ -33,30 +37,29 @@
         android:id="@+id/distance_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:textSize="25sp"
         android:text="@string/distance" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/min_distance"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/min_distance"/>
-        <SeekBar
-            android:id="@+id/distance_seekbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"/>
-        <TextView
-            android:id="@+id/max_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/max_distance" />
-    </LinearLayout>
+            android:background="@drawable/customerborder">
+            <TextView
+                android:id="@+id/min_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_distance"/>
+            <SeekBar
+                android:id="@+id/distance_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"/>
+            <TextView
+                android:id="@+id/max_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_distance" />
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -75,19 +78,19 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/alert_text"
+        android:id="@+id/alertText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:textSize="25sp"
         android:text="@string/alert_option" />
 
     <RadioGroup
         android:id="@+id/alertOption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/customerborder">
 
         <RadioButton
             android:id="@+id/sound_option"
