@@ -213,6 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+
         if(fusedLocationProviderClient != null){
             //Checks if app allows precise location checking
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
