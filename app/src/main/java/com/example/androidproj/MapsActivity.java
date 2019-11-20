@@ -229,7 +229,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Radius for school zones
         for(LatLng latLng : schoolZone){
             mMap.addCircle(new CircleOptions().center(latLng)
-                    .radius(160)
+                    .radius(distance)
                     .strokeColor(Color.BLUE)
                     .fillColor(0x220000FF)
                     .strokeWidth(5.0f)

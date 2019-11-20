@@ -5,8 +5,8 @@
     <string name="btn_stop">Stop</string>
     <string name="settings">Settings</string>
     <string name="distance">Distance</string>
-    <string name="min_distance">500m</string>
-    <string name="max_distance">2km</string>
+    <string name="min_distance">160m</string>
+    <string name="max_distance">500m</string>
     <string name="alert_option">Alert</string>
     <string name="vibrate">Vibrate</string>
     <string name="sound">Sound</string>

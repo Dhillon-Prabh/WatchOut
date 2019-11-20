@@ -61,13 +61,21 @@
                 android:text="@string/max_distance" />
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
         <EditText
             android:id="@+id/distance_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:inputType="numberSigned"
-            android:text="750"/>
+            android:inputType="numberSigned"/>
+        <TextView
+            android:id="@+id/meter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/meter"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/alertText"
