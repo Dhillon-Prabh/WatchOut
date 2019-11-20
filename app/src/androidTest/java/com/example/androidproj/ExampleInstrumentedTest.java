@@ -1,4 +1,4 @@
-package com.example.watchout;
+package com.example.androidproj;
 
 import android.content.Context;
 

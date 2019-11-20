@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.watchout">
+    package="com.example.androidproj">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -24,17 +24,17 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
-            android:name=".MapsActivity"
+            android:name="com.example.androidproj.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.androidproj.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity" />
+        <activity android:name="com.example.androidproj.SettingsActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
