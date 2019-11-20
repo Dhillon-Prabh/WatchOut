@@ -13,4 +13,8 @@
     <string name="tts">Text To Speech</string>
     <string name="title_activity_maps">Map</string>
     <string name="meter">m</string>
+    <string name="near_school">Watch out! School nearby.</string>
+    <string name="exiting_school">Exiting school zone</string>
+    <string name="tts_utterance_id">tts1</string>
+    <string name="tts_utterance_id2">tts2</string>
 </resources>

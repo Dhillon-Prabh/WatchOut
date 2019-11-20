@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -71,6 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int distance;
     private String alert_option;
     static final int SETTINGS_REQUEST_MAP = 2;
+    TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent i = getIntent();
         distance = i.getIntExtra("curDistance", 0);
         alert_option = i.getStringExtra("alert");
+
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.US);
+                }
+            }
+        });
+
         //requests permission
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -253,33 +265,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     notificationManager.notify(new Random().nextInt(), notification);
                 }
 
-                TextToSpeech tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if(status != TextToSpeech.ERROR) {
-                            tts.setLanguage(Locale.US);
-                        }
-                    }
-                });;
-
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
                 //when user enters radius
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
-                    sendNotification("EDMTDEV", String.format("%s entered a school zone", key));
-
-                    String messageText = "Entering school zone";
-                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+                    switch(alert_option.toLowerCase()) {
+                        case "vibrate":
+                            long[] pattern = {0, 600, 300, 600, 300, 600};
+                            v.vibrate(pattern, -1);
+                            break;
+                        case "sound":
+                            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.entering);
+                            mediaPlayer.start();
+                            break;
+                        case "text to speech":
+                            String messageText = getString(R.string.near_school);
+                            tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+                            break;
+                    }
                 }
 
                 //when user location updates and still in radius
                 @Override
                 public void onKeyExited(String key) {
-                    sendNotification("EDMTDEV", String.format("%s left the school zone", key));
-
-                                        String messageText = "Exiting school zone";
-                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+                    switch(alert_option.toLowerCase()) {
+                        case "vibrate":
+                            long[] pattern = {0, 600, 300, 600, 300, 600, 300, 600};
+                            v.vibrate(pattern, -1);
+                            break;
+                        case "sound":
+                            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.exiting);
+                            mediaPlayer.start();
+                            break;
+                        case "text to speech":
+                            String messageText = getString(R.string.exiting_school);
+                            tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id2");
+                            break;
+                    }
                 }
 
                 //when user leaves radius
@@ -290,7 +313,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                    String messageText = "drive safe please";
 //                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
 
-                    v.vibrate(400);
                 }
 
                 @Override
