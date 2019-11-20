@@ -9,7 +9,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     static final int SETTINGS_REQUEST = 1;
-    int distance;
+    int distance = 500;
     String alert_option = "sound";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
       
     public void viewMap(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        intent.putExtra("curDistance", distance);
+        intent.putExtra("alert", alert_option);
+        startActivityForResult(intent, SETTINGS_REQUEST);
     }
 }

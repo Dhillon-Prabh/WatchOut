@@ -12,4 +12,5 @@
     <string name="sound">Sound</string>
     <string name="tts">Text To Speech</string>
     <string name="title_activity_maps">Map</string>
+    <string name="meter">m</string>
 </resources>

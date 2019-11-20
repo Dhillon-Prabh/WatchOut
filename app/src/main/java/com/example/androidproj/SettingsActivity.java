@@ -85,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
             case "sound":
                 rg.check(R.id.sound_option);
                 break;
-            case "vibration":
+            case "vibrate":
                 rg.check(R.id.vibrate_option);
                 break;
             case "text to speech":
