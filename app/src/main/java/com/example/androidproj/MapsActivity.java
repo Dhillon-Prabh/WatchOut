@@ -15,6 +15,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -251,22 +254,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     notificationManager.notify(new Random().nextInt(), notification);
                 }
 
+                TextToSpeech tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status != TextToSpeech.ERROR) {
+                            tts.setLanguage(Locale.US);
+                        }
+                    }
+                });;
+
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
                 //when user enters radius
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
                     sendNotification("EDMTDEV", String.format("%s entered a school zone", key));
+
+                    String messageText = "Entering school zone";
+                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
                 }
 
                 //when user location updates and still in radius
                 @Override
                 public void onKeyExited(String key) {
                     sendNotification("EDMTDEV", String.format("%s left the school zone", key));
+
+                                        String messageText = "Exiting school zone";
+                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
                 }
 
                 //when user leaves radius
                 @Override
                 public void onKeyMoved(String key, GeoLocation location) {
-                    sendNotification("EDMTDEV", String.format("Please drive safely in school zone", key));
+//                    sendNotification("EDMTDEV", String.format("Please drive safely in school zone", key));
+
+//                    String messageText = "drive safe please";
+//                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+
+                    v.vibrate(400);
                 }
 
                 @Override
