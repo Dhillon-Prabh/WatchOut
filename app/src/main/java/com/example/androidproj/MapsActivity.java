@@ -14,6 +14,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -45,6 +48,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -179,6 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //Queries when user in school zones
             GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(latLng.latitude, latLng.longitude), 0.5); //500m
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+
                 private void sendNotification(String title, String content){
                     String NOTIFICATION_CHANNEL_ID = "edmt_multiple_location";
                     NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
@@ -206,19 +211,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     notificationManager.notify(new Random().nextInt(), notification);
                 }
 
+                TextToSpeech tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if(status != TextToSpeech.ERROR) {
+                            tts.setLanguage(Locale.US);
+                        }
+                    }
+                });;
+
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
                     sendNotification("EDMTDEV", String.format("%s entered a school zone", key));
+
+                    String messageText = "Entering school zone";
+                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+
+//                    switch(audio_option){
+//                        case "speech":
+//                            String messageText = "Entering school zone";
+//                            tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+//                            break;
+//                        case "sound":
+//                            //John's code
+//                            break;
+//                        case "vibrate":
+//                            v.vibrate(400);
+//                    }
                 }
 
                 @Override
                 public void onKeyExited(String key) {
                     sendNotification("EDMTDEV", String.format("%s left the school zone", key));
+
+                                        String messageText = "Exiting school zone";
+                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
                 }
 
                 @Override
                 public void onKeyMoved(String key, GeoLocation location) {
                     sendNotification("EDMTDEV", String.format("Please drive safely in school zone", key));
+
+//                    String messageText = "drive safe please";
+//                    tts.speak(messageText, TextToSpeech.QUEUE_FLUSH, null, "@string/tts_utterance_id");
+
+                    v.vibrate(400);
                 }
 
                 @Override
