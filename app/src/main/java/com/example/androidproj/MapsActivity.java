@@ -8,12 +8,14 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -63,12 +65,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DatabaseReference myLocationRef;
     private GeoFire geoFire;
     private List<LatLng> schoolZone;
+    private int distance;
+    private String alert_option;
+    static final int SETTINGS_REQUEST_MAP = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        Intent i = getIntent();
+        distance = i.getIntExtra("curDistance", 0);
+        alert_option = i.getStringExtra("alert");
         //requests permission
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -274,10 +282,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     @Override
     protected void onStop() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
         super.onStop();
+    }
+
+    public void clickBack(View view) {
+        Intent settings = new Intent();
+        settings.putExtra("distance", distance);
+        settings.putExtra("alert", alert_option);
+        setResult(RESULT_OK, settings);
+        this.finish();
+    }
+
+    public void clickSettings(View view) {
+        Intent i = new Intent(this, SettingsActivity.class);
+        i.putExtra("curDistance", distance);
+        i.putExtra("alert", alert_option);
+        startActivityForResult(i, SETTINGS_REQUEST_MAP);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SETTINGS_REQUEST_MAP && resultCode == RESULT_OK && data != null) {
+            distance = data.getIntExtra("distance", 0);
+            alert_option = data.getStringExtra("alert");
+        }
     }
 }

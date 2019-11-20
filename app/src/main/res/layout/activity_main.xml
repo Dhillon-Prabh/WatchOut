@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background_driving"
+    android:padding="20dp"
     tools:context=".MainActivity">
 
-    <ImageButton
+    <Button
         android:id="@+id/settings_btn"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_margin="10dp"
         android:layout_gravity="end"
-        app:srcCompat="@drawable/settings_icon"
-        android:background="@null"
+        android:background="@drawable/settings_icon"
         android:onClick="clickSettings"/>
 
     <LinearLayout

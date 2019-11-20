@@ -12,15 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
+        <Button
             android:id="@+id/back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/back_icon"
-            android:background="@null"
+            android:background="@drawable/back_icon"
             android:onClick="clickBack"/>
 
         <TextView
@@ -62,19 +59,29 @@
             android:text="@string/max_distance" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/distance_selected"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:inputType="numberSigned"
-        android:text="750"/>
+        android:layout_gravity="center">
+        <EditText
+            android:id="@+id/distance_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"/>
+        <TextView
+            android:id="@+id/meter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/meter"/>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/alertText"
+        android:id="@+id/alert_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="25sp"
         android:text="@string/alert_option" />
 
     <RadioGroup
