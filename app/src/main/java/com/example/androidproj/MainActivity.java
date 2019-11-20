@@ -11,7 +11,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
     static final int SETTINGS_REQUEST = 1;
     int distance = 160;
-    String alert_option = "sound";
+    String alert_option = "text to speech";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
