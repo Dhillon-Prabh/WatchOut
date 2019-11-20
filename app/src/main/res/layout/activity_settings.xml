@@ -25,10 +25,11 @@
 
         <TextView
             android:id="@+id/settings_title"
+            android:layout_marginStart="95dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
-            android:textSize="30sp"/>
+            android:textSize="30sp" />
 
     </LinearLayout>
 
